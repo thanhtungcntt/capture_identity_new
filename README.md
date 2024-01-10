@@ -18,8 +18,7 @@ The **Id Capture** Flutter package is designed to provide a simple and customiza
 Add two rows to the `ios/Runner/Info.plist`:
 
 * one with the key `Privacy - Camera Usage Description` and a usage description.
-* and one with the key `Privacy - Microphone Usage Description` and a usage description.
-
+  
 If editing `Info.plist` as text, add:
 
 ```xml
