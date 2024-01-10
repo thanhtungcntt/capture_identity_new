@@ -55,7 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: () async {
             // Show the ID capture dialog and update the state with the captured image
             idCapture = await showCapture(
-                context: context, title: "Scan ID", hideIdWidget: false);
+              context: context,
+              title: "Scan ID",
+              hideIdWidget: false,
+            );
             setState(() {});
           },
           child: Container(

@@ -1,7 +1,7 @@
 name: id_capture
 description: "A new Flutter package project."
 version: 1.0.0
-homepage:
+homepage: https://github.com/mohamed296/id_capture
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
