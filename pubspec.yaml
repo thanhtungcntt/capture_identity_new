@@ -1,6 +1,6 @@
 name: id_capture
 description: "Streamline ID image capture effortlessly in Flutter apps. Ideal for passports, IDs, and more. Customizable and user-friendly for seamless integration."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/mohamed296/id_capture
 
 environment:
