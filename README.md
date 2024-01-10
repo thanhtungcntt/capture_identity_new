@@ -1,8 +1,8 @@
-# Id Capture Flutter Package
+# Capture Identity Flutter Package
 
 ## Overview
 
-The **Id Capture** Flutter package is designed to provide a simple and customizable solution for capturing images of various identification documents, including ID cards, passports, and credit cards. This package utilizes Flutter for the user interface and leverages the `capture_identity` library for capturing ID images.
+The **Capture Identity** Flutter package is designed to provide a simple and customizable solution for capturing images of various identification documents, including ID cards, passports, and credit cards. This package utilizes Flutter for the user interface and leverages the `capture_identity` library for capturing ID images.
 
 | (1)                                                                                                                         | (2)                                                                                                                         | (3)                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: GestureDetector(
           onTap: () async {
-            // Show the ID capture dialog and update the state with the captured image
+            // Show the Capture Identity dialog and update the state with the captured image
             idCapture = await showCapture(
               context: context,
               title: "Scan ID",
