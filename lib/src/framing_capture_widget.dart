@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:id_capture/src/id_widget.dart';
+import 'package:capture_identity/src/id_widget.dart';
 
 /// `FramingCaptureWidget` is a Flutter widget designed to create a framing overlay
 /// with customizable border and a central rectangular area. It is commonly used

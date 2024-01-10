@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  id_capture:
+  capture_identity:
     path: ../
 
 

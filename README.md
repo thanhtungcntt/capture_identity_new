@@ -2,11 +2,11 @@
 
 ## Overview
 
-The **Id Capture** Flutter package is designed to provide a simple and customizable solution for capturing images of various identification documents, including ID cards, passports, and credit cards. This package utilizes Flutter for the user interface and leverages the `id_capture` library for capturing ID images.
+The **Id Capture** Flutter package is designed to provide a simple and customizable solution for capturing images of various identification documents, including ID cards, passports, and credit cards. This package utilizes Flutter for the user interface and leverages the `capture_identity` library for capturing ID images.
 
 | (1)                                                                                                                         | (2)                                                                                                                         | (3)                                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://github.com/mohamed296/id_capture/blob/main/assets/1.jpeg?raw=true?raw=true" alt="1" width="100"> | <img src="https://github.com/mohamed296/id_capture/blob/main/assets/2.jpeg?raw=true?raw=true" alt="2" width="100"> | <img src="https://github.com/mohamed296/id_capture/blob/main/assets/3.jpeg?raw=true?raw=true" alt="1" width="100">                                                                                                  |
+| <img src="https://github.com/mohamed296/capture_identity/blob/main/assets/1.jpeg?raw=true?raw=true" alt="1" width="100"> | <img src="https://github.com/mohamed296/capture_identity/blob/main/assets/2.jpeg?raw=true?raw=true" alt="2" width="100"> | <img src="https://github.com/mohamed296/capture_identity/blob/main/assets/3.jpeg?raw=true?raw=true" alt="1" width="100">                                                                                                  |
 
 
 ## Getting Started
@@ -42,7 +42,7 @@ NOTE: this package is build based on camera package (https://pub.dev/packages/ca
 ```dart
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:id_capture/id_capture.dart';
+import 'package:capture_identity/capture_identity.dart';
 
 // ... (Rest of the code remains the same)
 
@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
 ```dart
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:id_capture/id_capture.dart';
+import 'package:capture_identity/capture_identity.dart';
 
 // ... (Rest of the code remains the same)
 

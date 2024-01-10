@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:id_capture/id_capture.dart';
+import 'package:capture_identity/capture_identity.dart';
 
 /// The `showCapture` function displays a capture screen using the device's camera
 /// to allow users to capture images. It returns a [Future<XFile?>] representing

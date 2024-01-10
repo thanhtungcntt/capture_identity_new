@@ -65,6 +65,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.2+4"
+  capture_identity:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -168,13 +175,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  id_capture:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.0.1"
   image:
     dependency: transitive
     description:
