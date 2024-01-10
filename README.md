@@ -11,9 +11,7 @@ The **Id Capture** Flutter package is designed to provide a simple and customiza
 
 ## Getting Started
 
-### 1. Installation
-
-First, add `camera` as a [dependency in your pubspec.yaml file](https://flutter.dev/using-packages/).
+### Installation
 
 ### iOS
 
