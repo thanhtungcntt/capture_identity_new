@@ -42,14 +42,15 @@ class CaptureView extends StatefulWidget {
 }
 
 class _CaptureViewState extends State<CaptureView> {
-  late CameraController controller;
+  CameraController? controller; // Change to nullable type
   late List<CameraDescription> cameras;
+  bool isCapturing = false; // Add a flag to track capturing state
 
   @override
   void initState() {
     super.initState();
     initializeCameras().then((value) {
-// Initialize the camera controller with a default camera description.
+      // Initialize the camera controller with a default camera description.
       if (cameras.isEmpty) {
         controller = CameraController(
             getDefaultCameraDescription(), ResolutionPreset.ultraHigh);
@@ -59,7 +60,7 @@ class _CaptureViewState extends State<CaptureView> {
       }
 
       // Initialize the camera controller and update the UI after initialization.
-      controller.initialize().then((_) {
+      controller?.initialize().then((_) {
         if (!mounted) {
           return;
         }
@@ -86,7 +87,7 @@ class _CaptureViewState extends State<CaptureView> {
   @override
   void dispose() {
     // Dispose of the camera controller to release resources.
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -98,7 +99,8 @@ class _CaptureViewState extends State<CaptureView> {
         fit: StackFit.expand,
         children: [
           // Live camera preview.
-          CameraPreview(controller),
+          if (controller != null && controller!.value.isInitialized)
+            CameraPreview(controller!),
           // Framing guides around the capture area.
           FramingCaptureWidget(
             hideIdWidget: widget.hideIdWidget ?? false,
@@ -116,9 +118,11 @@ class _CaptureViewState extends State<CaptureView> {
                 children: [
                   // Back button.
                   IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: isCapturing
+                        ? null
+                        : () {
+                            Navigator.pop(context);
+                          },
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
@@ -164,21 +168,27 @@ class _CaptureViewState extends State<CaptureView> {
               child: IconButton(
                 enableFeedback: true,
                 color: Colors.white,
-                onPressed: () async {
-                  // Capture an image.
-                  XFile file = await controller.takePicture();
+                onPressed: isCapturing
+                    ? null
+                    : () async {
+                        setState(() {
+                          isCapturing = true;
+                        });
 
-                  // Crop the captured image.
-                  File? croppedImage = await CaptureController.cropImage(
-                    File(file.path),
-                  );
+                        // Capture an image.
+                        XFile file = await controller!.takePicture();
 
-                  // Callback to handle the cropped image.
-                  widget.fileCallback(croppedImage!);
+                        // Crop the captured image.
+                        File? croppedImage = await CaptureController.cropImage(
+                          File(file.path),
+                        );
 
-                  // Close the capture screen and callback to handle the cropped image..
-                  Navigator.pop(context, croppedImage);
-                },
+                        // Callback to handle the cropped image.
+                        widget.fileCallback(croppedImage!);
+
+                        // Close the capture screen and callback to handle the cropped image..
+                        Navigator.pop(context, croppedImage);
+                      },
                 icon: const Icon(
                   Icons.camera,
                 ),
