@@ -94,26 +94,26 @@ class _CaptureViewState extends State<CaptureView> {
     );
   }
 
-  void _showCameraAccessDeniedDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Camera Access Denied'),
-          content: const Text(
-              'User has previously denied the camera access request. Go to Settings to enable camera access.'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showCameraAccessDeniedDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text('Camera Access Denied'),
+  //         content: const Text(
+  //             'User has previously denied the camera access request. Go to Settings to enable camera access.'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: const Text('OK'),
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {
