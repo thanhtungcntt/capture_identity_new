@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:capture_identity_new_new/src/capture_controller.dart';
-import 'package:capture_identity_new_new/src/framing_capture_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'capture_controller.dart';
+import 'framing_capture_widget.dart';
 
 /// CaptureView is a Flutter widget for capturing images using the device's camera.
 /// It provides a user interface with a live camera preview, framing guides,
