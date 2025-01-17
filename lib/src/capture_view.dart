@@ -22,6 +22,7 @@ class CaptureView extends StatefulWidget {
       {Key? key,
       required this.fileCallback,
       required this.title,
+      this.onCameraAccessDenied,
       this.info,
       this.hideIdWidget})
       : super(key: key);
@@ -36,6 +37,8 @@ class CaptureView extends StatefulWidget {
   final String? info;
 
   final bool? hideIdWidget;
+
+  final VoidCallback? onCameraAccessDenied;
 
   @override
   State<CaptureView> createState() => _CaptureViewState();
@@ -65,7 +68,16 @@ class _CaptureViewState extends State<CaptureView> {
           return;
         }
         setState(() {});
+      }).catchError((e) {
+        if (e is CameraException &&
+            e.code == 'CameraAccessDeniedWithoutPrompt') {
+          widget.onCameraAccessDenied?.call();
+        }
       });
+    }).catchError((e) {
+      if (e is CameraException && e.code == 'CameraAccessDeniedWithoutPrompt') {
+        widget.onCameraAccessDenied?.call();
+      }
     });
   }
 
@@ -75,12 +87,31 @@ class _CaptureViewState extends State<CaptureView> {
     setState(() {}); // Refresh the widget tree after obtaining cameras
   }
 
-  /// Retrieves the default camera description with placeholder values.
   CameraDescription getDefaultCameraDescription() {
-    return const CameraDescription(
-      name: "default",
-      lensDirection: CameraLensDirection.back,
-      sensorOrientation: 180,
+    return cameras.firstWhere(
+      (camera) => camera.lensDirection == CameraLensDirection.back,
+      orElse: () => cameras.first,
+    );
+  }
+
+  void _showCameraAccessDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Camera Access Denied'),
+          content: const Text(
+              'User has previously denied the camera access request. Go to Settings to enable camera access.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
