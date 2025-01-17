@@ -22,6 +22,7 @@ class CaptureView extends StatefulWidget {
       {Key? key,
       required this.fileCallback,
       required this.title,
+      this.onCameraAccessDenied,
       this.info,
       this.hideIdWidget})
       : super(key: key);
@@ -37,19 +38,22 @@ class CaptureView extends StatefulWidget {
 
   final bool? hideIdWidget;
 
+  final VoidCallback? onCameraAccessDenied;
+
   @override
   State<CaptureView> createState() => _CaptureViewState();
 }
 
 class _CaptureViewState extends State<CaptureView> {
-  late CameraController controller;
+  CameraController? controller; // Change to nullable type
   late List<CameraDescription> cameras;
+  bool isCapturing = false; // Add a flag to track capturing state
 
   @override
   void initState() {
     super.initState();
     initializeCameras().then((value) {
-// Initialize the camera controller with a default camera description.
+      // Initialize the camera controller with a default camera description.
       if (cameras.isEmpty) {
         controller = CameraController(
             getDefaultCameraDescription(), ResolutionPreset.ultraHigh);
@@ -59,12 +63,21 @@ class _CaptureViewState extends State<CaptureView> {
       }
 
       // Initialize the camera controller and update the UI after initialization.
-      controller.initialize().then((_) {
+      controller?.initialize().then((_) {
         if (!mounted) {
           return;
         }
         setState(() {});
+      }).catchError((e) {
+        if (e is CameraException &&
+            e.code == 'CameraAccessDeniedWithoutPrompt') {
+          widget.onCameraAccessDenied?.call();
+        }
       });
+    }).catchError((e) {
+      if (e is CameraException && e.code == 'CameraAccessDeniedWithoutPrompt') {
+        widget.onCameraAccessDenied?.call();
+      }
     });
   }
 
@@ -74,19 +87,38 @@ class _CaptureViewState extends State<CaptureView> {
     setState(() {}); // Refresh the widget tree after obtaining cameras
   }
 
-  /// Retrieves the default camera description with placeholder values.
   CameraDescription getDefaultCameraDescription() {
-    return const CameraDescription(
-      name: "default",
-      lensDirection: CameraLensDirection.back,
-      sensorOrientation: 180,
+    return cameras.firstWhere(
+      (camera) => camera.lensDirection == CameraLensDirection.back,
+      orElse: () => cameras.first,
+    );
+  }
+
+  void _showCameraAccessDeniedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Camera Access Denied'),
+          content: const Text(
+              'User has previously denied the camera access request. Go to Settings to enable camera access.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
   @override
   void dispose() {
     // Dispose of the camera controller to release resources.
-    controller.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -98,7 +130,8 @@ class _CaptureViewState extends State<CaptureView> {
         fit: StackFit.expand,
         children: [
           // Live camera preview.
-          CameraPreview(controller),
+          if (controller != null && controller!.value.isInitialized)
+            CameraPreview(controller!),
           // Framing guides around the capture area.
           FramingCaptureWidget(
             hideIdWidget: widget.hideIdWidget ?? false,
@@ -116,9 +149,11 @@ class _CaptureViewState extends State<CaptureView> {
                 children: [
                   // Back button.
                   IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: isCapturing
+                        ? null
+                        : () {
+                            Navigator.pop(context);
+                          },
                     icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
@@ -164,21 +199,27 @@ class _CaptureViewState extends State<CaptureView> {
               child: IconButton(
                 enableFeedback: true,
                 color: Colors.white,
-                onPressed: () async {
-                  // Capture an image.
-                  XFile file = await controller.takePicture();
+                onPressed: isCapturing
+                    ? null
+                    : () async {
+                        setState(() {
+                          isCapturing = true;
+                        });
 
-                  // Crop the captured image.
-                  File? croppedImage = await CaptureController.cropImage(
-                    File(file.path),
-                  );
+                        // Capture an image.
+                        XFile file = await controller!.takePicture();
 
-                  // Callback to handle the cropped image.
-                  widget.fileCallback(croppedImage!);
+                        // Crop the captured image.
+                        File? croppedImage = await CaptureController.cropImage(
+                          File(file.path),
+                        );
 
-                  // Close the capture screen and callback to handle the cropped image..
-                  Navigator.pop(context, croppedImage);
-                },
+                        // Callback to handle the cropped image.
+                        widget.fileCallback(croppedImage!);
+
+                        // Close the capture screen and callback to handle the cropped image..
+                        Navigator.pop(context, croppedImage);
+                      },
                 icon: const Icon(
                   Icons.camera,
                 ),

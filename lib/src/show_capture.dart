@@ -30,6 +30,7 @@ Future<File?> showCapture({
   required String title,
   String? info,
   bool? hideIdWidget,
+  VoidCallback? onCameraAccessDenied,
 }) async {
   return showDialog<File?>(
     context: context,
@@ -38,6 +39,7 @@ Future<File?> showCapture({
       title: title,
       info: info,
       hideIdWidget: hideIdWidget,
+      onCameraAccessDenied: onCameraAccessDenied,
     ),
   );
 }
