@@ -1,7 +1,7 @@
-name: capture_identity_new
+name: capture_identity_new_new
 description: "Streamline ID image capture effortlessly in Flutter apps. Ideal for passports, IDs, and more. Customizable and user-friendly for seamless integration."
 version: 1.0.0
-homepage: https://github.com/mohamed296/capture_identity
+homepage: https://github.com/thanhtungcntt/capture_identity_new
 
 environment:
   sdk: ">=3.2.3 <4.0.0"

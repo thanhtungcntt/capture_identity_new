@@ -5,18 +5,18 @@
  "version": "0.2.0",
  "configurations": [
   {
-   "name": "capture_identity_new",
+   "name": "capture_identity_new_new",
    "request": "launch",
    "type": "dart"
   },
   {
-   "name": "capture_identity_new (profile mode)",
+   "name": "capture_identity_new_new (profile mode)",
    "request": "launch",
    "type": "dart",
    "flutterMode": "profile"
   },
   {
-   "name": "capture_identity_new (release mode)",
+   "name": "capture_identity_new_new (release mode)",
    "request": "launch",
    "type": "dart",
    "flutterMode": "release"

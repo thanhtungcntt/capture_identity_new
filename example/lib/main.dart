@@ -3,7 +3,8 @@
 // Import necessary packages and files
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:capture_identity/capture_identity.dart';
+// ignore: depend_on_referenced_packages
+import 'package:capture_identity/capture_identity_new.dart';
 
 // Main function to run the application
 void main() {
